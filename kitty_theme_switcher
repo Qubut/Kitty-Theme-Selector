@@ -1,0 +1,27 @@
+#! /bin/sh
+
+KITTY=$XDG_CONFIG_HOME/kitty
+THEMES=$XDG_CONFIG_HOME/kitty/kitty-themes/themes
+LINK=$XDG_CONFIG_HOME/kitty/kitty.conf
+
+choose_theme() {
+  THEME=$(ls $THEMES | fzf)
+  if [ -h "$LINK" ]; then
+    rm -f $LINK
+  fi
+  ln -s "$THEMES/$THEME" "$LINK"
+  xdotool keydown ctrl shift F5
+  xdotool keyup F5 shift ctrl
+}
+
+if [ -d "$THEMES" ]; then
+  choose_theme
+else
+  echo "$THEMES don't exist"
+  if [ ! -d "$KITTY" ]; then
+    mkdir -p $KITTY
+  fi
+  echo "Cloning kitty themes"
+  git clone --depth 1 https://github.com/dexpota/kitty-themes.git ~/.config/kitty/kitty-themes
+  choose_theme
+fi
