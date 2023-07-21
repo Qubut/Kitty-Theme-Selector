@@ -14,29 +14,29 @@ The Kitty Theme Selector is a command-line tool written in Bash to choose and ap
 
 ## Features
 
-    Choose and apply themes for the kitty terminal emulator.
-    Command-line argument support for specifying the themes directory and theme directory.
-    Automatic cloning of the themes repository if no themes are found or the directory is empty.
-    Theme preservation - Backup of the current theme is created before applying a new one.
-    Signal handling for Ctrl+C to ensure graceful cleanup operations and theme restoration.
+   - Choose and apply themes for the kitty terminal emulator.
+   - Command-line argument support for specifying the themes directory and theme directory.
+   - Automatic cloning of the themes repository if no themes are found or the directory is empty.
+   - Theme preservation - Backup of the current theme is created before applying a new one.
+   - Signal handling for Ctrl+C to ensure graceful cleanup operations and theme restoration.
 
 ## Prerequisites
 
 To use this script, you need the following:
 
-    1. Bash: The script is written in Bash, so make sure you have a compatible Bash shell available.
-    2. xdotool: This script uses xdotool to send keystrokes to the terminal for refreshing the kitty theme. Ensure that xdotool is installed and accessible in your system.
+1. Bash: The script is written in Bash, so make sure you have a compatible Bash shell available.
+2. xdotool: This script uses xdotool to send keystrokes to the terminal for refreshing the kitty theme. Ensure that xdotool is installed and accessible in your system.
 
 ## Installation
 
     Clone the repository or download the script:
 
 
-    ```sh
+```bash
 
-    git clone https://github.com/yourusername/kitty-theme-selector.git
-    cd kitty-theme-selector
-    ```
+git clone https://github.com/yourusername/kitty-theme-selector.git
+cd kitty-theme-selector
+```
 
     Make the script executable:
 
