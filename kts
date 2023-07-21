@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 VARS="./env_vars"
 source "$VARS"
@@ -15,7 +15,7 @@ display_help() {
   echo "  -t, --theme-dir <dir>    Set the directory where the current kitty theme's symbolic link is created. Default is: $THEME_PATH"
 }
 check_args() {
-  while [[ $# -gt 0 ]]; do
+  while [ $# -gt 0 ]; do
     key="$1"
 
     case $key in
