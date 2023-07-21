@@ -1,5 +1,7 @@
 #!/bin/sh
 
+UTILS="./utilities"
+source "$UTILS"
 THEME=$1
 echo "$THEME:"
 hr_length=30
@@ -7,4 +9,4 @@ hr_character="-"
 printf "%${hr_length}s\n" | tr " " "$hr_character"
 cat $THEMES_DIR/$THEME
 rm -f "$THEME_PATH" && ln -s "$THEMES_DIR/$THEME" "$THEME_PATH"
-xdotool keydown ctrl shift F5 && xdotool keyup F5 shift ctrl
+refresh_kitty
