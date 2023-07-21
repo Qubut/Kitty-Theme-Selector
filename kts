@@ -11,8 +11,8 @@ display_help() {
   echo "Choose and apply a theme for the kitty terminal emulator."
   echo "Options:"
   echo "  -h, --help               Display this help message."
-  echo "  -d, --themes-dir <dir>   Set the directory where kitty themes are stored. Default is: $THEMES_DIR"
-  echo "  -t, --theme-dir <dir>    Set the directory where the current kitty theme link is created. Default is: $THEME_PATH"
+  echo "  -d, --themes-dir <dir>   Set the directory where kitty themes are stored. Default is: $CLONING_PATH"
+  echo "  -t, --theme-dir <dir>    Set the directory where the current kitty theme's symbolic link is created. Default is: $THEME_PATH"
 }
 check_args() {
   while [[ $# -gt 0 ]]; do
@@ -24,11 +24,12 @@ check_args() {
         exit 0
         ;;
       -d|--themes-dir)
-        THEMES_DIR="$2"
+        export CLONING_PATH="$2"
+        export THEMES_DIR=$CLONING_PATH/themes
         shift
         ;;
       -t|--theme-dir)
-        THEME_PATH="$2"
+        export THEME_PATH="$2"
         shift
         ;;
       *)
@@ -45,8 +46,8 @@ run() {
   check_args "$@"
   if [ -z "$(ls -A "$THEMES_DIR")" ] || [ ! -d "$THEMES_DIR" ]; then
     echo "No Themes found"
-    echo "Cloning from $THEMES_REPO"
-    rm -rf "$THEMES_DIR" 2>/dev/null
+    echo "Cloning to $CLONING_PATH"
+    rm -rf "$CLONING_PATH" 2>/dev/null
     clone_themes_from_git
   fi
   create_backup

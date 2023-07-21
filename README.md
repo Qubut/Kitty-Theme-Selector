@@ -34,15 +34,15 @@ Clone the repository or download the script:
 
 ```bash
 
-git clone https://github.com/yourusername/kitty-theme-selector.git
-cd kitty-theme-selector
+git clone https://github.com/Qubut/Kitty-Theme-Selector.git
+cd Kitty-Theme-Selector
 ```
 
 Make the script executable:
 
 ```bash
 
-chmod +x kitty-theme-selector.sh
+chmod +x kts.sh
 ```
 ## Usage
 
@@ -50,15 +50,16 @@ Run the script with the following command:
 
 ```bash
 
-./kitty-theme-selector.sh [options]
+./kts [options]
 ```
 ### Options
 
 The script supports the following command-line options:
 
     -h, --help: Display the help message.
-    -d, --themes-dir <dir>: Set the directory where kitty themes are stored. Default is: ~/.config/kitty/kitty-themes/themes/.
-    -t, --theme-dir <dir>: Set the directory where the current kitty theme link is created. Default is: ~/.config/kitty/kitty.conf.
+    -d, --themes-dir <dir>: Set the directory where kitty themes are stored. Default is: ~/.config/kitty/kitty-themes/.
+    -t, --theme-dir <dir>: Set the directory where the current kitty theme link is created. 
+    Default is: ~/.config/kitty/kitty.conf -> ~/.config/kitty/kitty-themes/themes/Choosen_theme.conf.
 
 ### Themes Repository
 
