@@ -57,8 +57,8 @@ Run the script with the following command:
 The script supports the following command-line options:
 
     -h, --help: Display the help message.
-    -d, --themes-dir <dir>: Set the directory where kitty themes are stored. Default is: themes/.
-    -t, --theme-dir <dir>: Set the directory where the current kitty theme link is created. Default is: ~/.config/kitty/theme.conf.
+    -d, --themes-dir <dir>: Set the directory where kitty themes are stored. Default is: ~/.config/kitty/kitty-themes/themes/.
+    -t, --theme-dir <dir>: Set the directory where the current kitty theme link is created. Default is: ~/.config/kitty/kitty.conf.
 
 ### Themes Repository
 
