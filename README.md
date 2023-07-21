@@ -29,7 +29,7 @@ To use this script, you need the following:
 
 ## Installation
 
-    Clone the repository or download the script:
+Clone the repository or download the script:
 
 
 ```bash
@@ -38,7 +38,7 @@ git clone https://github.com/yourusername/kitty-theme-selector.git
 cd kitty-theme-selector
 ```
 
-    Make the script executable:
+Make the script executable:
 
 ```bash
 
