@@ -1,0 +1,65 @@
+#!/bin/sh
+
+function undo_changes() {
+  mv "${THEME_PATH}.bak" "$THEME_PATH"
+  refresh_kitty
+}
+
+function create_backup() {
+  mv "$THEME_PATH" "${THEME_PATH}.bak"
+}
+
+function exiting() {
+  echo "No theme selected. Exiting..."
+  undo_changes
+  echo 
+  exit 0
+}
+
+function apply_theme() {
+  if [ -h "$THEME_PATH" ]; then
+    rm -f "$THEME_PATH"
+  fi
+  ln -s "$THEMES_DIR/$THEME" "$THEME_PATH"
+  rm -f "${THEME_PATH}.bak" 2>/dev/null
+}
+
+function choose_theme() {
+  while true; do
+    local THEME=$(ls "$THEMES_DIR" | fzf -m --preview "./previewer {}")
+    if [ -z "$THEME" ]; then
+      echo "empty"
+      break
+    fi
+    choice=$(echo -e "yes\nno\nexit" | fzf --prompt="Apply this theme "${THEME%.*}"? ")
+    case "$choice" in
+      exit)
+        echo ""
+        break
+        ;;
+      no)
+        continue
+        ;;
+      yes)
+        echo "$THEME"
+        break
+        ;;
+    esac
+  done
+}
+
+
+function refresh_kitty() {
+  xdotool keydown ctrl shift F5
+  xdotool keyup F5 shift ctrl
+}
+
+function clone_themes_from_git() {
+  git clone --depth 1 "$THEMES_REPO" "$CLONING_PATH"
+}
+function unset_variables_from_file() {
+  local file="$1"
+  for var in $(cut -d= -f1 "$file"); do
+    unset "$var"
+  done
+}

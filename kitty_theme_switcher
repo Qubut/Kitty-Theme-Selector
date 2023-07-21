@@ -1,27 +1,67 @@
-#! /bin/sh
+#!/bin/sh
 
-KITTY=$XDG_CONFIG_HOME/kitty
-THEMES=$XDG_CONFIG_HOME/kitty/kitty-themes/themes
-LINK=$XDG_CONFIG_HOME/kitty/kitty.conf
+VARS="./env_vars"
+source "$VARS"
+UTILS="./utilities"
+source "$UTILS"
+export $(cut -d= -f1 "$VARS")
 
-choose_theme() {
-  THEME=$(ls $THEMES | fzf)
-  if [ -h "$LINK" ]; then
-    rm -f $LINK
-  fi
-  ln -s "$THEMES/$THEME" "$LINK"
-  xdotool keydown ctrl shift F5
-  xdotool keyup F5 shift ctrl
+display_help() {
+  echo "Usage: $0 [-h|--help] [-d|--themes-dir <dir>] [-t|--theme-dir <dir>]"
+  echo "Choose and apply a theme for the kitty terminal emulator."
+  echo "Options:"
+  echo "  -h, --help               Display this help message."
+  echo "  -d, --themes-dir <dir>   Set the directory where kitty themes are stored. Default is: $THEMES_DIR"
+  echo "  -t, --theme-dir <dir>    Set the directory where the current kitty theme link is created. Default is: $THEME_PATH"
+}
+check_args() {
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+
+    case $key in
+      -h|--help)
+        display_help
+        exit 0
+        ;;
+      -d|--themes-dir)
+        THEMES_DIR="$2"
+        shift
+        ;;
+      -t|--theme-dir)
+        THEME_PATH="$2"
+        shift
+        ;;
+      *)
+        echo "Invalid option: $key"
+        display_help
+        exit 1
+        ;;
+    esac
+    shift
+  done
 }
 
-if [ -d "$THEMES" ]; then
-  choose_theme
-else
-  echo "$THEMES don't exist"
-  if [ ! -d "$KITTY" ]; then
-    mkdir -p $KITTY
+run() {
+  check_args "$@"
+  if [ -z "$(ls -A "$THEMES_DIR")" ] || [ ! -d "$THEMES_DIR" ]; then
+    echo "No Themes found"
+    echo "Cloning from $THEMES_REPO"
+    rm -rf "$THEMES_DIR" 2>/dev/null
+    clone_themes_from_git
   fi
-  echo "Cloning kitty themes"
-  git clone --depth 1 https://github.com/dexpota/kitty-themes.git ~/.config/kitty/kitty-themes
-  choose_theme
-fi
+  create_backup
+  THEME=$(choose_theme)
+  if [ "$THEME" = "empty" ]; then
+    exiting
+  elif [ -n "$THEME" ]; then
+    apply_theme
+
+  else
+    undo_changes
+  fi
+  refresh_kitty
+}
+
+run "$@"
+unset_variables_from_file "$VARS"
+

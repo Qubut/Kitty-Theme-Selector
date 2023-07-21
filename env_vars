@@ -1,0 +1,9 @@
+
+KITTY=$XDG_CONFIG_HOME/kitty
+CLONING_PATH=$XDG_CONFIG_HOME/kitty/kitty-themes
+THEMES_DIR=$CLONING_PATH/themes
+THEME_PATH=$XDG_CONFIG_HOME/kitty/kitty.conf
+THEME_BACKUP=${THEME_PATH}.bak
+THEMES_REPO=https://github.com/dexpota/kitty-themes.git
+THEMES_LINK=''
+
